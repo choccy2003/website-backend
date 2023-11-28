@@ -67,5 +67,9 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+process.on('SIGINT', () => {
+  console.log('Closing MongoDB connection');
+  client.close();
+  process.exit();
+});
 module.exports = app;
