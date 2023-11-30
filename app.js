@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
-require('dotenv').config()
+
 
 
 
@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
 });
 const mongoose = require('mongoose');
 
-const connectionString = process.env.URL;
+const connectionString = 'mongodb://127.0.0.1:27017/ecommerce';
 
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
@@ -67,9 +67,5 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-process.on('SIGINT', () => {
-  console.log('Closing MongoDB connection');
-  client.close();
-  process.exit();
-});
+
 module.exports = app;
