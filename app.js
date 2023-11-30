@@ -45,7 +45,7 @@ const connectionString = process.env.URL;
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  // Optionally, other mongoose options can be added here
+ serverSelectionTimeoutMS: 5000, 
 });
 
 const db = mongoose.connection;
