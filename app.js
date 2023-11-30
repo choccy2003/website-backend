@@ -45,6 +45,10 @@ const connectionString = 'mongodb://127.0.0.1:27017/ecommerce';
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  poolSize: process.env.MONGO_POOL_SIZE || 10,
+    autoReconnect: true,
+    reconnectInterval: 1000,
+    reconnectTries: 10,
   // Optionally, other mongoose options can be added here
 });
 
