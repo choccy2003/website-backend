@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
-
+require('dotenv').config()
 
 
 
@@ -40,20 +40,12 @@ app.use(function (req, res, next) {
 });
 const mongoose = require('mongoose');
 
-const connectionString = 'mongodb://127.0.0.1:27017/ecommerce';
+const connectionString = process.env.URL;
 
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-auto_reconnect: true,
-  db: {
-    w: 1
-  },
-  server: {
-    socketOptions: {
-      keepAlive: 1
-    }
-  }
+  // Optionally, other mongoose options can be added here
 });
 
 const db = mongoose.connection;
@@ -75,5 +67,9 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+process.on('SIGINT', () => {
+  console.log('Closing MongoDB connection');
+  client.close();
+  process.exit();
+});
 module.exports = app;
